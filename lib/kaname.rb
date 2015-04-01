@@ -14,7 +14,14 @@ module Kaname
       end
 
       def run
-        p load_yaml
+        yml = load_yaml
+
+        yml.each do |user,h|
+          p user
+          h.each do |tenant, role|
+            p [tenant, role]
+          end
+        end
       end
     end
   end
