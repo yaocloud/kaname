@@ -1,5 +1,11 @@
 require "kaname/version"
 
 module Kaname
-  # Your code goes here...
+  class CLI
+    class << self
+      def run
+        p :foo
+      end
+    end
+  end
 end
