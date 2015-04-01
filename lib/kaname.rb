@@ -34,7 +34,7 @@ module Kaname
             # create new users
           end
 
-          h.each do |tenant, role|
+          h["tenants"].each do |tenant, role|
             p tenants.find{|t| t.name == tenant}
             p roles.find{|r| r.name == role}
           end
