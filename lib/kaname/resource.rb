@@ -29,10 +29,23 @@ module Kaname
 
         @h = {}
         users.each do |u|
+          next if ignored_users.include?(u.name)
           @h[u.name] = {}
           @h[u.name]["email"] = u.email
         end
         @h
+      end
+
+      # default service users
+      def ignored_users
+        %w[
+          neutron
+          glance
+          cinder
+          admin
+          nova_ec2
+          nova
+        ]
       end
     end
   end
