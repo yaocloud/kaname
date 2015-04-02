@@ -5,7 +5,13 @@ class TestKaname < Minitest::Test
     refute_nil ::Kaname::VERSION
   end
 
-  def test_it_does_something_useful
-    assert false
+  def test_yaml
+    Dir.chdir "test/fixtures" do
+      assert_equal Hash, Kaname::CLI.yaml.class
+    end
+  end
+
+  def test_yaml_with_no_file
+    assert_equal "", Kaname::CLI.yaml
   end
 end
