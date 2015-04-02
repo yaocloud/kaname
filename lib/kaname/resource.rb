@@ -32,6 +32,13 @@ module Kaname
           next if ignored_users.include?(u.name)
           @h[u.name] = {}
           @h[u.name]["email"] = u.email
+          @h[u.name]["tenants"] = {}
+          tenants.each do |t|
+            r = u.roles(t.id)
+            if r.size > 0
+              @h[u.name]["tenants"][t.name] = r.first["name"]
+            end
+          end
         end
         @h
       end
