@@ -1,28 +1,32 @@
 # Kaname
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/kaname`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Kaname(要) is configuration management tool of Keystone.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'kaname'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install it yourself as:
 
     $ gem install kaname
 
 ## Usage
 
-TODO: Write usage instructions here
+You can define keystone configuration for OpenStack via YAML format. Like following syntax.
+
+```yaml
+hsbt-test:
+  email: "hsbt@example.com"
+  password: "awesome-password"
+  tenants:
+    devnyah: "admin"
+```
+
+You need to run following command.
+
+```sh
+$ kaname apply
+```
+
+You can create user and user's role with tenant
 
 ## Development
 
