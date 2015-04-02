@@ -12,6 +12,6 @@ class TestKaname < Minitest::Test
   end
 
   def test_yaml_with_no_file
-    assert_equal "", Kaname::Resource.yaml
+    refute Kaname::Resource.yaml
   end
 end
