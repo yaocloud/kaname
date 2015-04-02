@@ -27,5 +27,10 @@ module Kaname
         puts "Please put you keystone configuration file named keystone.yml to current directory."
       end
     end
+
+    desc 'diff', 'Commands about show diffs from your openstack'
+    def diff
+      p Kaname::Resource.users_hash
+    end
   end
 end

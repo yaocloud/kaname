@@ -23,6 +23,17 @@ module Kaname
       def roles
         @_roles ||= Fog::Identity[:openstack].roles
       end
+
+      def users_hash
+        return @h if @h
+
+        @h = {}
+        users.each do |u|
+          @h[u.name] = {}
+          @h[u.name]["email"] = u.email
+        end
+        @h
+      end
     end
   end
 end
