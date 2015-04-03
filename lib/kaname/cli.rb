@@ -1,5 +1,6 @@
 require 'fog'
 require 'thor'
+require 'hashdiff'
 
 module Kaname
   class CLI < Thor
@@ -30,7 +31,8 @@ module Kaname
 
     desc 'diff', 'Commands about show diffs from your openstack'
     def diff
-      p Kaname::Resource.users_hash
+      diff = HashDiff.diff(Kaname::Resource.users_hash, Kaname::Resource.yaml)
+      p diff
     end
   end
 end
