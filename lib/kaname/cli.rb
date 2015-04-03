@@ -9,26 +9,12 @@ module Kaname
     desc 'apply', 'Commands about configuration apply'
     def apply
       if Kaname::Resource.yaml
-        begin
-          accounts = File.open('accounts.csv', 'w+')
-          Kaname::Resource.yaml.each do |user,h|
-            id = begin
-                   user = Kaname::Resource.users.find_by_name(user)
-                   user.id
-                 rescue Fog::Identity::OpenStack::NotFound
-                   password = Kaname::Generator.password
-                   accounts.write("#{user},#{password}¥n")
-                   response = Fog::Identity[:openstack].create_user(user, password, h["email"])
-                   response.data[:body]["user"]["id"]
-                 end
-
-            h["tenants"].each do |tenant, role|
-              tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
-              role = Kaname::Resource.roles.find{|r| r.name == role}
-              Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
-            end
-          ensure
-            accounts.close
+        Kaname::Resource.yaml.each do |user,h|
+          id = Kaname::Resource.user(user)
+          h["tenants"].each do |tenant, role|
+            tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
+            role = Kaname::Resource.roles.find{|r| r.name == role}
+            Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
           end
         end
       else
