@@ -1,5 +1,4 @@
 hsbt-test:
   email: "hsbt@example.com"
-  password: "awesome-password"
   tenants:
     devnyah: "admin"
