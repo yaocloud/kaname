@@ -16,15 +16,15 @@ module Kaname
           resource = diff[1].split('.')
           if resource.size == 1 # "user"
             if diff[0] == "+"
-              Kaname::Resource.create_user(resource[1], diff[2]['email'])
-              id = Kaname::Resource.user(resource[1])
+              response = Kaname::Resource.create_user(resource[1], diff[2]['email'])
+              id = response.data[:body]["user"]["id"]
               diff[2]["tenants"].each do |tenant, role|
                 tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
                 role = Kaname::Resource.roles.find{|r| r.name == role}
                 Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
               end
             else
-              id = Kaname::Resource.user(resource[1])
+              id = Kaname::Resource.user(resource[0])
               Fog::Identity[:openstack].delete_user(id)
             end
           end
