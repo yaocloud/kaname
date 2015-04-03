@@ -12,16 +12,15 @@ module Kaname
                  end
       end
 
-      def user(name)
-        begin
-          user = Kaname::Resource.users.find_by_name(user)
-          user.id
-        rescue Fog::Identity::OpenStack::NotFound
-          password = Kaname::Generator.password
-          puts "#{user},#{password}"
-          response = Fog::Identity[:openstack].create_user(user, password, h["email"])
-          response.data[:body]["user"]["id"]
-        end
+      def user(user)
+        user = Kaname::Resource.users.find_by_name(user)
+        user.id
+      end
+
+      def create_user(name, email)
+        password = Kaname::Generator.password
+        puts "#{user},#{password}"
+        Fog::Identity[:openstack].create_user(user, password, email)
       end
 
       def users

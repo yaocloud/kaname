@@ -1,6 +1,7 @@
 require 'yaml'
 require 'fog'
 require 'thor'
+require 'hashdiff'
 require 'diffy'
 
 module Kaname
@@ -10,12 +11,22 @@ module Kaname
     desc 'apply', 'Commands about configuration apply'
     def apply
       if Kaname::Resource.yaml
-        Kaname::Resource.yaml.each do |user,h|
-          id = Kaname::Resource.user(user)
-          h["tenants"].each do |tenant, role|
-            tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
-            role = Kaname::Resource.roles.find{|r| r.name == role}
-            Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+        diffs = HashDiff.diff(Kaname::Resource.users_hash, Kaname::Resource.yaml)
+        diffs.each do |diff|
+          resource = diff[1].split('.')
+          if resource.size == 1 # "user"
+            if diff[0] == "+"
+              Kaname::Resource.create_user(resource[1], diff[2]['email'])
+              id = Kaname::Resource.user(resource[1])
+              diff[2]["tenants"].each do |tenant, role|
+                tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
+                role = Kaname::Resource.roles.find{|r| r.name == role}
+                Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+              end
+            else
+              id = Kaname::Resource.user(resource[1])
+              Fog::Identity[:openstack].delete_user(id)
+            end
           end
         end
       else

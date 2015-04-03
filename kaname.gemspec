@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "fog"
   spec.add_dependency "diffy"
+  spec.add_dependency "hashdiff"
   spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler", "~> 1.9"
