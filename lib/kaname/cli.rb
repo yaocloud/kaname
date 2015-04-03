@@ -1,6 +1,7 @@
+require 'yaml'
 require 'fog'
 require 'thor'
-require 'hashdiff'
+require 'diffy'
 
 module Kaname
   class CLI < Thor
@@ -24,8 +25,7 @@ module Kaname
 
     desc 'diff', 'Commands about show diffs from your openstack'
     def diff
-      diff = HashDiff.diff(Kaname::Resource.users_hash, Kaname::Resource.yaml)
-      p diff
+      puts Diffy::Diff.new(YAML.dump(Kaname::Resource.users_hash), YAML.dump(Kaname::Resource.yaml))
     end
   end
 end
