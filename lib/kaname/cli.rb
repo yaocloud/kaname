@@ -8,6 +8,7 @@ module Kaname
   class CLI < Thor
     class_option :verbose, type: :boolean, aliases: "-V", default: false
 
+    option :dryrun, type: :boolean, aliases: "-d", default: true
     desc 'apply', 'Commands about configuration apply'
     def apply
       if Kaname::Resource.yaml
@@ -16,16 +17,28 @@ module Kaname
           resource = diff[1].split('.')
           if resource.size == 1 # "user"
             if diff[0] == "+"
-              response = Kaname::Resource.create_user(resource[1], diff[2]['email'])
-              id = response.data[:body]["user"]["id"]
+              if options[:dryrun]
+                puts "Create User: #{resource[1]}"
+              else
+                response = Kaname::Resource.create_user(resource[1], diff[2]['email'])
+                id = response.data[:body]["user"]["id"]
+              end
               diff[2]["tenants"].each do |tenant, role|
                 tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
                 role = Kaname::Resource.roles.find{|r| r.name == role}
-                Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+                if options[:dryrun]
+                  puts "Create User Role: #{tenant.name} #{resource[1]} #{role.name}"
+                else
+                  Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+                end
               end
             else
               id = Kaname::Resource.user(resource[0])
-              Fog::Identity[:openstack].delete_user(id)
+              if options[:dryrun]
+                puts "Delete User: #{resource[0]}"
+              else
+                Fog::Identity[:openstack].delete_user(id)
+              end
             end
           elsif resource.size == 3 # "user.tenants.foo"
             id = Kaname::Resource.user(resource[0])
@@ -33,13 +46,27 @@ module Kaname
             role = Kaname::Resource.roles.find{|r| r.name == diff[2]}
             case diff[0]
             when "+"
-              Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+              if options[:dryrun]
+                puts "Create User Role: #{tenant.name} #{resource[0]} #{role.name}"
+              else
+                Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+              end
             when "-"
-              Fog::Identity[:openstack].delete_user_role(tenant.id, id, role.id)
+              if options[:dryrun]
+                puts "Delete User Role: #{tenant.name} #{resource[0]} #{role.name}"
+              else
+                Fog::Identity[:openstack].delete_user_role(tenant.id, id, role.id)
+              end
             when "~"
-              Fog::Identity[:openstack].delete_user_role(tenant.id, id, role.id)
-              role = Kaname::Resource.roles.find{|r| r.name == diff[3]}
-              Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+              if options[:dryrun]
+                puts "Delete User Role: #{tenant.name} #{resource[0]} #{role.name}"
+                role = Kaname::Resource.roles.find{|r| r.name == diff[3]}
+                puts "Create User Role: #{tenant.name} #{resource[0]} #{role.name}"
+              else
+                Fog::Identity[:openstack].delete_user_role(tenant.id, id, role.id)
+                role = Kaname::Resource.roles.find{|r| r.name == diff[3]}
+                Fog::Identity[:openstack].create_user_role(tenant.id, id, role.id)
+              end
             end
           else # "user.tenants"
             # XXX
