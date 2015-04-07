@@ -16,12 +16,6 @@ module Kaname
         Kaname::Resource.users.find_by_name(name)
       end
 
-      def create_user(name, email)
-        password = Kaname::Generator.password
-        puts "#{user},#{password}"
-        Fog::Identity[:openstack].create_user(user, password, email)
-      end
-
       def users
         @_users ||= Fog::Identity[:openstack].users
       end

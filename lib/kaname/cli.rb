@@ -20,7 +20,9 @@ module Kaname
               if options[:dryrun]
                 puts "Create User: #{resource[0]}"
               else
-                response = Kaname::Resource.create_user(resource[0], diff[2]['email'])
+                password = Kaname::Generator.password
+                puts "#{user},#{password}"
+                response = Fog::Identity[:openstack].create_user(resource[0], password, diff[2]['email'])
                 user = response.data[:body]["user"]
               end
               diff[2]["tenants"].each do |tenant, role|
