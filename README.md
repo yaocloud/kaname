@@ -1,5 +1,7 @@
 # Kaname
 
+[![Build Status](https://secure.travis-ci.org/hsbt/kaname.png)](https://travis-ci.org/hsbt/kaname)
+
 Kaname(要) is configuration management tool of Keystone.
 
 ## Installation
