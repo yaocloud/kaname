@@ -6,8 +6,6 @@ require 'diffy'
 
 module Kaname
   class CLI < Thor
-    class_option :verbose, type: :boolean, aliases: "-V", default: false
-
     option :dryrun, type: :boolean, aliases: "-d", default: true
     desc 'apply', 'Commands about configuration apply'
     def apply
