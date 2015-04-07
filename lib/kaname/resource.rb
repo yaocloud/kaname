@@ -12,10 +12,6 @@ module Kaname
                  end
       end
 
-      def user(name)
-        Kaname::Resource.users.find_by_name(name)
-      end
-
       def users
         @_users ||= Fog::Identity[:openstack].users
       end

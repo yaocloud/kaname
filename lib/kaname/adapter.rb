@@ -2,6 +2,10 @@ require 'kaname/resource'
 
 module Kaname
   class MockAdapter
+    def find_user(name)
+      {name: user.name}
+    end
+
     def create_user(name, email)
       puts "Create User: #{name} #{email}"
       {name: name}
@@ -26,6 +30,11 @@ module Kaname
   end
 
   class Adapter
+    def find_user(name)
+      Kaname::Resource.users.find_by_name(name)
+      {id: user.id, name: user.name}
+    end
+
     # def create_user(name, email)
     #   password = Kaname::Generator.password
     #   puts "#{user},#{password}"

@@ -31,8 +31,7 @@ module Kaname
               adapter.delete_user(resource[0])
             end
           elsif resource.size == 3 # "user.tenants.foo"
-            user = Kaname::Resource.user(resource[0])
-            user_hash = {id: user.id, name: user.name}
+            user_hash = adapter.find_user(resource[0])
             case diff[0]
             when "+"
               adapter.create_user_role(resource[2], user_hash, diff[2])
