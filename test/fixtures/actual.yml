@@ -2,3 +2,4 @@ foo:
   email: "foo@example.com"
   tenants:
     buzz: "admin"
+    alpha: 'bravo'
