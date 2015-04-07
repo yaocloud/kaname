@@ -12,9 +12,9 @@ module Kaname
     desc 'apply', 'Commands about configuration apply'
     def apply
       adapter = if options[:dryrun]
-        Kaname::MockAdapter.new
+        Kaname::Adapter::Mock.new
       else
-        Kaname::Adapter.new
+        Kaname::Adapter::Real.new
       end
 
       if Kaname::Resource.yaml
