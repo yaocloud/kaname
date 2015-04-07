@@ -1,0 +1,4 @@
+bar:
+  email: "bar@example.com"
+  tenants:
+    buzz: "admin"
