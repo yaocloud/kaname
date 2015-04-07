@@ -3,7 +3,7 @@ require 'minitest_helper'
 class TestKanameResource < Minitest::Test
   def test_yaml
     Dir.chdir "test/fixtures" do
-      assert_equal Hash, Kaname::Resource.yaml.class
+      assert_equal Hash, Kaname::Resource.yaml('actual.yml').class
     end
   end
 

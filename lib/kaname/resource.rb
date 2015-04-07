@@ -2,11 +2,10 @@ require 'yaml'
 
 module Kaname
   class Resource
-    DEFAULT_FILENAME = 'keystone.yml'
     class << self
-      def yaml
-        @_yaml = if File.exists?(DEFAULT_FILENAME)
-                   YAML.load_file(DEFAULT_FILENAME)
+      def yaml(filename = 'keystone.yml')
+        @_yaml = if File.exists?(filename)
+                   YAML.load_file(filename)
                  else
                    nil
                  end
