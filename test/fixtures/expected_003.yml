@@ -1,0 +1,5 @@
+foo:
+  email: "foo@example.com"
+  tenants:
+    buzz: "member"
+    bravo: "delta"
