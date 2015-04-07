@@ -12,9 +12,8 @@ module Kaname
                  end
       end
 
-      def user(user)
-        user = Kaname::Resource.users.find_by_name(user)
-        user.id
+      def user(name)
+        Kaname::Resource.users.find_by_name(name)
       end
 
       def create_user(name, email)
