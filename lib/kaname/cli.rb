@@ -18,16 +18,16 @@ module Kaname
           if resource.size == 1 # "user"
             if diff[0] == "+"
               if options[:dryrun]
-                puts "Create User: #{resource[1]}"
+                puts "Create User: #{resource}"
               else
-                response = Kaname::Resource.create_user(resource[1], diff[2]['email'])
+                response = Kaname::Resource.create_user(resource, diff[2]['email'])
                 user = response.data[:body]["user"]
               end
               diff[2]["tenants"].each do |tenant, role|
                 tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
                 role = Kaname::Resource.roles.find{|r| r.name == role}
                 if options[:dryrun]
-                  puts "Create User Role: #{tenant.name} #{user["name"]} #{role.name}"
+                  puts "Create User Role: #{tenant.name} #{resource} #{role.name}"
                 else
                   Fog::Identity[:openstack].create_user_role(tenant.id, user["id"], role.id)
                 end
