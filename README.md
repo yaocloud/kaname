@@ -13,17 +13,24 @@ Install it yourself as:
 You can define keystone configuration for OpenStack via YAML format. Like following syntax.
 
 ```yaml
-hsbt-test:
+antipop:
+  email: "antipop@example.com"
+  password: "awesome-password"
+  tenants:
+    production: "cto"
+hsbt:
   email: "hsbt@example.com"
   password: "awesome-password"
   tenants:
-    devnyah: "admin"
+    development: "admin"
+    production: "member"
 ```
 
 You need to run following command.
 
 ```sh
-$ kaname apply
+$ kaname diff # You can see difference of definition
+$ kaname apply # You can apply configuration into OpenStack
 ```
 
 You can create user and user's role with tenant
