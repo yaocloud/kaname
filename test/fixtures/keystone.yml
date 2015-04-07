@@ -1,4 +1,0 @@
-hsbt-test:
-  email: "hsbt@example.com"
-  tenants:
-    devnyah: "admin"
