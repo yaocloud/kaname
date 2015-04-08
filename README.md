@@ -35,7 +35,13 @@ $ kaname diff # You can see difference of definition
 $ kaname apply # You can apply configuration into OpenStack
 ```
 
-You can create user and user's role with tenant
+You can create user and user's role with tenant.
+
+If you need to initialize your Keystone configuration, you can get it via following command:
+
+```sh
+$ kaname dump
+```
 
 ## Development
 
