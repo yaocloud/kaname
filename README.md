@@ -28,7 +28,18 @@ hsbt:
     production: "member"
 ```
 
-You need to run following command.
+You need to put fog configuration to home directory.
+
+```sh
+% cat ~/.fog
+default:
+  openstack_auth_url: "http://your-openstack-endpoint/v2.0/tokens"
+  openstack_username: "admin"
+  openstack_tenant: "admin"
+  openstack_api_key: "admin-no-password"
+```
+
+run following command.
 
 ```sh
 $ kaname diff # You can see difference of definition
