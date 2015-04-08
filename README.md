@@ -17,12 +17,10 @@ You can define keystone configuration for OpenStack via YAML format. Like follow
 ```yaml
 antipop:
   email: "antipop@example.com"
-  password: "awesome-password"
   tenants:
     production: "cto"
 hsbt:
   email: "hsbt@example.com"
-  password: "awesome-password"
   tenants:
     development: "admin"
     production: "member"
