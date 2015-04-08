@@ -20,8 +20,8 @@ module Kaname
       end
 
       def delete_user(name)
-        user = Kaname::Resource.user(name)
-        Fog::Identity[:openstack].delete_user(user.id)
+        user = find_user(name)
+        Fog::Identity[:openstack].delete_user(user["id"])
       end
 
       def delete_user_role(tenant, user_hash, role)
