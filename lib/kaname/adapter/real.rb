@@ -13,9 +13,9 @@ module Kaname
         response.data[:body]["user"]
       end
 
-      def create_user_role(tenant, user_hash, email)
+      def create_user_role(tenant, user_hash, role_name)
         tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
-        role = Kaname::Resource.roles.find{|r| r.name == role}
+        role = Kaname::Resource.roles.find{|r| r.name == role_name}
         Fog::Identity[:openstack].create_user_role(tenant.id, user_hash["id"], role.id)
       end
 
