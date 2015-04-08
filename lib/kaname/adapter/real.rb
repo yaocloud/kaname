@@ -2,7 +2,7 @@ module Kaname
   module Adapter
     class Real
       def find_user(name)
-        Kaname::Resource.users.find_by_name(name)
+        user = Kaname::Resource.users.find_by_name(name)
         {"id" => user.id, "name" => user.name}
       end
 
