@@ -2,7 +2,7 @@ require 'securerandom'
 
 module Kaname
   class Generator
-    class < self
+    class << self
       def password
         SecureRandom.base64(6)
       end
