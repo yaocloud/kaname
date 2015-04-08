@@ -8,8 +8,8 @@ module Kaname
 
       def create_user(name, email)
         password = Kaname::Generator.password
-        puts "#{user},#{password}"
-        response = Fog::Identity[:openstack].create_user(resource[0], password, diff[2]['email'])
+        puts "#{name},#{password}"
+        response = Fog::Identity[:openstack].create_user(name, password, email)
         response.data[:body]["user"]
       end
 
