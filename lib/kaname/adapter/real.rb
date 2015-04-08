@@ -13,8 +13,8 @@ module Kaname
         response.data[:body]["user"]
       end
 
-      def create_user_role(tenant, user_hash, role_name)
-        tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
+      def create_user_role(tenant_name, user_hash, role_name)
+        tenant = Kaname::Resource.tenants.find{|t| t.name == tenant_name}
         role = Kaname::Resource.roles.find{|r| r.name == role_name}
         Fog::Identity[:openstack].create_user_role(tenant.id, user_hash["id"], role.id)
       end
@@ -24,15 +24,15 @@ module Kaname
         Fog::Identity[:openstack].delete_user(user["id"])
       end
 
-      def delete_user_role(tenant, user_hash, role)
-        tenant = Kaname::Resource.tenants.find{|t| t.name == tenant}
-        role = Kaname::Resource.roles.find{|r| r.name == role}
+      def delete_user_role(tenant_name, user_hash, role_name)
+        tenant = Kaname::Resource.tenants.find{|t| t.name == tenant_name}
+        role = Kaname::Resource.roles.find{|r| r.name == role_name}
         Fog::Identity[:openstack].delete_user_role(tenant.id, user_hash["id"], role.id)
       end
 
-      def change_user_role(tenant, user_hash, before_role, after_role)
-        delete_user_role(tenant, user_hash, before_role)
-        create_user_role(tenant, user_hash, after_role)
+      def change_user_role(tenant_name, user_hash, before_role_name, after_role_name)
+        delete_user_role(tenant_name, user_hash, before_role_name)
+        create_user_role(tenant_name, user_hash, after_role_name)
       end
     end
   end
