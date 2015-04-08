@@ -51,5 +51,10 @@ module Kaname
     def diff
       puts Diffy::Diff.new(YAML.dump(Kaname::Resource.users_hash), YAML.dump(Kaname::Resource.yaml))
     end
+
+    desc 'dump', 'Commands about dump Keystone configuration.'
+    def dump
+      puts YAML.dump(Kaname::Resource.users_hash)
+    end
   end
 end
