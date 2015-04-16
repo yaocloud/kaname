@@ -6,7 +6,7 @@ require 'diffy'
 
 module Kaname
   class CLI < Thor
-    option :dryrun, type: :boolean, aliases: "-d", default: true
+    option :dryrun, type: :boolean
     desc 'apply', 'Commands about configuration apply'
     def apply
       adapter = if options[:dryrun]
