@@ -41,8 +41,8 @@ run following command.
 
 ```sh
 $ kaname diff # You can see difference of definition
-$ kaname apply # You can see all of invoke commands(dryrun)
-$ kaname apply --dryrun false # apply configuration into OpenStack
+$ kaname apply # apply configuration into OpenStack
+$ kaname apply --dryrun # You can see all of invoke commands(dryrun)
 ```
 
 You can create user and user's role with tenant.
