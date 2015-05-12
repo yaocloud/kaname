@@ -29,7 +29,7 @@ module Kaname
           req = Net::HTTP::Patch.new(url.path)
           req["Content-type"] = "application/json"
           req["X-Auth-Token"] = credentials[:openstack_auth_token]
-          req.body = JSON.generate({'user' => {'password': new_password, 'original_password': old_password}})
+          req.body = JSON.generate({'user' => {'password' => new_password, 'original_password' => old_password}})
           res = Net::HTTP.start(url.host, url.port) {|http|
             http.request(req)
           }
