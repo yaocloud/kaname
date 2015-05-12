@@ -23,7 +23,9 @@ module Kaname
 
       def update_user_password(credentials, old_password, new_password)
         if old_password && new_password
-          url = URI.parse("http://api-vip.u01.pbcloud.local:5000/v2.0/OS-KSCRUD/users/#{credentials[:openstack_current_user_id]}")
+          # TODO: need to confirm port number of endpoint
+          endpoint = "http://#{URI(credentials[:openstack_management_url]).hostname}:5000/v2.0"
+          url = URI.parse("#{endpoint}/OS-KSCRUD/users/#{credentials[:openstack_current_user_id]}")
           req = Net::HTTP::Patch.new(url.path)
           req["Content-type"] = "application/json"
           req["X-Auth-Token"] = credentials[:openstack_auth_token]
