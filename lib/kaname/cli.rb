@@ -6,6 +6,11 @@ require 'diffy'
 
 module Kaname
   class CLI < Thor
+    desc 'password', 'Commands about updating user password'
+    def password
+      Kaname::Adapter::Real.new.update_user_password
+    end
+
     option :dryrun, type: :boolean
     desc 'apply', 'Commands about configuration apply'
     def apply
