@@ -21,17 +21,7 @@ module Kaname
         Fog::Identity[:openstack].create_user_role(tenant.id, user_hash["id"], role.id)
       end
 
-      def update_user_password
-        credentials = Fog::Identity[:openstack].credentials
-        puts "current_user: #{credentials[:current_user]["username"]}"
-
-        print "type your current password: "
-        old_password = STDIN.noecho(&:gets).strip
-        puts
-        print "type your new password: "
-        new_password = STDIN.noecho(&:gets).strip
-        puts
-
+      def update_user_password(credentials, old_password, new_password)
         if old_password && new_password
           url = URI.parse("http://api-vip.u01.pbcloud.local:5000/v2.0/OS-KSCRUD/users/#{credentials[:openstack_current_user_id]}")
           puts "http://api-vip.u01.pbcloud.local:5000/v2.0/OS-KSCRUD/users/#{credentials[:openstack_current_user_id]}"
