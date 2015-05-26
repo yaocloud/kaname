@@ -51,6 +51,7 @@ module Kaname
           admin
           nova_ec2
           nova
+          heat
         ]
       end
     end
