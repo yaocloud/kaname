@@ -52,6 +52,7 @@ module Kaname
           nova_ec2
           nova
           heat
+          ceilometer
         ]
       end
     end
