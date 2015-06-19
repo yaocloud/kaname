@@ -1,4 +1,5 @@
 require 'net/http'
+require 'json'
 
 module Kaname
   module Adapter
