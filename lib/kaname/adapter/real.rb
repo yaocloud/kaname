@@ -5,21 +5,18 @@ module Kaname
   module Adapter
     class Real
       def find_user(name)
-        user = Kaname::Resource.users.find_by_name(name)
-        {"id" => user.id, "name" => user.name}
+        Yao::User.find_by_name(name)
       end
 
       def create_user(name, email)
         password = Kaname::Generator.password
         puts "#{name},#{password}"
-        response = Fog::Identity[:openstack].create_user(name, password, email)
-        response.data[:body]["user"]
+
+        Yao::User.create(name: name, email: email, password: password)
       end
 
       def create_user_role(tenant_name, user_hash, role_name)
-        tenant = Kaname::Resource.tenants.find{|t| t.name == tenant_name}
-        role = Kaname::Resource.roles.find{|r| r.name == role_name}
-        Fog::Identity[:openstack].create_user_role(tenant.id, user_hash["id"], role.id)
+        Yao::Role.grant(role_name, to: user_hash["name"], on: tenant_name)
       end
 
       def update_user_password(credentials, old_password, new_password)
@@ -43,14 +40,11 @@ module Kaname
       end
 
       def delete_user(name)
-        user = find_user(name)
-        Fog::Identity[:openstack].delete_user(user["id"])
+        Yao::User.destroy find_user(name).id
       end
 
       def delete_user_role(tenant_name, user_hash, role_name)
-        tenant = Kaname::Resource.tenants.find{|t| t.name == tenant_name}
-        role = Kaname::Resource.roles.find{|r| r.name == role_name}
-        Fog::Identity[:openstack].delete_user_role(tenant.id, user_hash["id"], role.id)
+        Yao::Role.revoke(role_name, from: user_hash["name"], on: tenant_name)
       end
 
       def change_user_role(tenant_name, user_hash, before_role_name, after_role_name)
