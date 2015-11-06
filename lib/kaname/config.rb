@@ -24,6 +24,10 @@ module Kaname
 
       config = YAML.load_file(config_file)
 
+      %w[auth_url tenant username password].each do |conf_item|
+        raise "Configuration '#{conf_item}' is missing. Check your ~/.kaname" unless config[conf_item]
+      end
+
       @@auth_url       = config['auth_url']
       @@tenant         = config['tenant']
       @@username       = config['username']
