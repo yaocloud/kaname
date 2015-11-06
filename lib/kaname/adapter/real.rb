@@ -13,7 +13,8 @@ module Kaname
         password = Kaname::Generator.password
         puts "#{name},#{password}"
 
-        Yao::User.create(name: name, email: email, password: password)
+        user = Yao::User.create(name: name, email: email, password: password)
+        {"id" => user.id,  "name" => user.name}
       end
 
       def create_user_role(tenant_name, user_hash, role_name)
