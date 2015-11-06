@@ -1,5 +1,4 @@
 require 'yaml'
-require 'fog'
 require 'thor'
 require 'hashdiff'
 require 'diffy'
