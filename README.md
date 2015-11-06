@@ -30,10 +30,11 @@ You need to put a configuration file to home directory.
 
 ```sh
 % cat ~/.kaname
-auth_url: "http://your-openstack-endpoint/v2.0/tokens"
+auth_url: "http://your-openstack-auth-endpoint/v2.0"
 username: "admin"
-tenant:   "admin"
+tenant: "admin"
 password: "admin-no-password"
+management_url: "http://your-openstack-management-endpoint/v2.0"
 ```
 
 run following command.

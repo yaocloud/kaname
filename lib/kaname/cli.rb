@@ -8,8 +8,7 @@ module Kaname
   class CLI < Thor
     desc 'password', 'Commands about updating user password'
     def password
-      credentials = Fog::Identity[:openstack].credentials
-      puts "current_user: #{credentials[:current_user]["username"]}"
+      puts "current_user: #{Kaname::Config.username}"
 
       print "type your current password: "
       old_password = STDIN.noecho(&:gets).strip
@@ -18,7 +17,7 @@ module Kaname
       new_password = STDIN.noecho(&:gets).strip
       puts
 
-      Kaname::Adapter::Real.new.update_user_password(credentials, old_password, new_password)
+      Kaname::Adapter::Real.new.update_user_password(old_password, new_password)
     end
 
     option :dryrun, type: :boolean
