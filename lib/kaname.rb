@@ -10,4 +10,4 @@ require 'kaname/resource'
 module Kaname
 end
 
-Kaname::Config.setup
+Kaname::Config.setup unless ENV['RACK_ENV'] == 'test'
