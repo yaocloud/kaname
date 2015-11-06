@@ -49,7 +49,7 @@ module Kaname
       end
 
       def delete_user(name)
-        Yao::User.destroy find_user(name).id
+        Yao::User.destroy find_user(name)["id"]
       end
 
       def delete_user_role(tenant_name, user_hash, role_name)
