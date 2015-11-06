@@ -3,3 +3,9 @@ rvm:
   - 2.0.0
   - 2.1.6
   - 2.2.2
+before_script:
+  - echo 'auth_url: "http://your-openstack-auth-endpoint/v2.0"'             >  ~/.kaname
+  - echo 'username: "admin"'                                                >> ~/.kaname
+  - echo 'tenant: "admin"'                                                  >> ~/.kaname
+  - echo 'password: "admin-no-password"'                                    >> ~/.kaname
+  - echo 'management_url: "http://your-openstack-management-endpoint/v2.0"' >> ~/.kaname
