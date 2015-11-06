@@ -5,7 +5,8 @@ module Kaname
   module Adapter
     class Real
       def find_user(name)
-        Yao::User.find_by_name(name)
+        user = Yao::User.find_by_name(name)
+        {"id" => user.id, "name" => user.name}
       end
 
       def create_user(name, email)
