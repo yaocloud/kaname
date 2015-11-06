@@ -1,0 +1,44 @@
+require 'yao'
+require 'yaml'
+
+module Kaname
+  class Config
+    def self.setup
+      load_config
+      setup_yao
+    end
+
+    def self.username
+      @@username
+    end
+
+    def self.management_url
+      @@management_url
+    end
+
+    private
+
+    def self.load_config
+      config_file = File.join(Dir.home, '.kaname')
+      raise '~/.kaname is missing' unless File.exists?(config_file)
+
+      config = YAML.load_file(config_file)
+
+      @@auth_url       = config['auth_url']
+      @@tenant         = config['tenant']
+      @@username       = config['username']
+      @@password       = config['password']
+      @@management_url = config['management_url']
+      true
+    end
+
+    def self.setup_yao
+      Yao.configure do
+        auth_url    @@auth_url
+        tenant_name @@tenant
+        username    @@username
+        password    @@password
+      end
+    end
+  end
+end

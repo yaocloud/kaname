@@ -1,6 +1,6 @@
 require "kaname/version"
 
-require 'kaname/setup'
+require 'kaname/config'
 
 require 'kaname/adapter'
 require 'kaname/cli'
@@ -10,4 +10,4 @@ require 'kaname/resource'
 module Kaname
 end
 
-Kaname::Setup.execute
+Kaname::Config.setup
