@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Identity configuration tool for OpenStack.}
   spec.description   = %q{Identity configuration tool for OpenStack. You can apply simple YAML definition into Keystone.}
-  spec.homepage      = "https://github.com/hsbt/kaname"
+  spec.homepage      = "https://github.com/yaocloud/kaname"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

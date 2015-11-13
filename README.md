@@ -1,6 +1,6 @@
 # Kaname
 
-[![Build Status](https://secure.travis-ci.org/hsbt/kaname.png)](https://travis-ci.org/hsbt/kaname)
+[![Build Status](https://secure.travis-ci.org/yaocloud/kaname.png)](https://travis-ci.org/yaocloud/kaname)
 
 Kaname(要) is configuration management tool of Keystone.
 
@@ -61,7 +61,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/hsbt/kaname/fork )
+1. Fork it ( https://github.com/yaocloud/kaname/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
