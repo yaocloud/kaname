@@ -12,15 +12,15 @@ module Kaname
       end
 
       def users
-        @_users ||= Fog::Identity[:openstack].users
+        @_users ||= Yao::User.list
       end
 
       def tenants
-        @_tenants ||= Fog::Identity[:openstack].tenants
+        @_tenants ||= Yao::Tenant.list
       end
 
       def roles
-        @_roles ||= Fog::Identity[:openstack].roles
+        @_roles ||= Yao::Role.list
       end
 
       def users_hash
@@ -33,9 +33,9 @@ module Kaname
           @h[u.name]["email"] = u.email
           @h[u.name]["tenants"] = {}
           tenants.each do |t|
-            r = u.roles(t.id)
+            r = Yao::Role.list_for_user(u.name, on: t.name)
             if r.size > 0
-              @h[u.name]["tenants"][t.name] = r.first["name"]
+              @h[u.name]["tenants"][t.name] = r.first.name
             end
           end
         end
