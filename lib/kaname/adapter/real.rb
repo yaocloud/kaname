@@ -4,6 +4,14 @@ require 'json'
 module Kaname
   module Adapter
     class Real
+      def initialize
+        Kaname::Config.setup
+      end
+
+      def list_users
+        Yao::User.list
+      end
+
       def find_user(name)
         user = Yao::User.find_by_name(name)
         {"id" => user.id, "name" => user.name}
@@ -59,6 +67,18 @@ module Kaname
       def change_user_role(tenant_name, user_hash, before_role_name, after_role_name)
         delete_user_role(tenant_name, user_hash, before_role_name)
         create_user_role(tenant_name, user_hash, after_role_name)
+      end
+
+      def list_tenants
+        Yao::Tenant.list
+      end
+
+      def list_roles
+        Yao::Role.list
+      end
+
+      def list_roles_for_user(user_name, tenant_name)
+        Yao::Role.list_for_user(user_name, on: tenant_name)
       end
     end
   end
