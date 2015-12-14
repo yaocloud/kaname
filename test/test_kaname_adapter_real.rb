@@ -14,9 +14,11 @@ class TestKanameAdapterReal < Minitest::Test
 
     Yao::Auth.stub(:try_new, mock_auth) do
       Yao::User.stub(:get_by_name, mock_user) do
-        Kaname::Config.stub(:management_url, dummy_management_url) do
-          Kaname::Config.stub(:username, "dummy_username") do
-            Kaname::Adapter::Real.new.update_user_password('old', 'new')
+        Kaname::Config.stub(:setup, nil) do
+          Kaname::Config.stub(:management_url, dummy_management_url) do
+            Kaname::Config.stub(:username, "dummy_username") do
+              Kaname::Adapter::Real.new.update_user_password('old', 'new')
+            end
           end
         end
       end
