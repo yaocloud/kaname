@@ -3,12 +3,7 @@ require 'json'
 
 module Kaname
   module Adapter
-    class Real
-      def find_user(name)
-        user = Yao::User.find_by_name(name)
-        {"id" => user.id, "name" => user.name}
-      end
-
+    class ReadAndWrite < ReadOnly
       def create_user(name, email)
         password = Kaname::Generator.password
         puts "#{name},#{password}"

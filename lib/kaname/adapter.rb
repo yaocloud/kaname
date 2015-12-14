@@ -1,2 +1,2 @@
-require 'kaname/adapter/real'
-require 'kaname/adapter/mock'
+require 'kaname/adapter/read_only'
+require 'kaname/adapter/read_and_write'
