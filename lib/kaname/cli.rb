@@ -16,16 +16,17 @@ module Kaname
       new_password = STDIN.noecho(&:gets).strip
       puts
 
-      Kaname::Adapter::Real.new.update_user_password(old_password, new_password)
+      adapter = Kaname::Resource.use_adapter(Kaname::Adapter::Real)
+      adapter.update_user_password(old_password, new_password)
     end
 
     option :dryrun, type: :boolean
     desc 'apply', 'Commands about configuration apply'
     def apply
       adapter = if options[:dryrun]
-        Kaname::Adapter::Mock.new
+        Kaname::Resource.use_adapter(Kaname::Adapter::Mock)
       else
-        Kaname::Adapter::Real.new
+        Kaname::Resource.use_adapter(Kaname::Adapter::Real)
       end
 
       if Kaname::Resource.yaml
@@ -62,11 +63,13 @@ module Kaname
 
     desc 'diff', 'Commands about show diffs from your openstack'
     def diff
+      Kaname::Resource.use_adapter(Kaname::Adapter::Real)
       puts Diffy::Diff.new(YAML.dump(Kaname::Resource.users_hash), YAML.dump(Kaname::Resource.yaml))
     end
 
     desc 'dump', 'Commands about dump Keystone configuration.'
     def dump
+      Kaname::Resource.use_adapter(Kaname::Adapter::Real)
       puts YAML.dump(Kaname::Resource.users_hash)
     end
   end
