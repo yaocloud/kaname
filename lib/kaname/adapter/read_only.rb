@@ -23,22 +23,11 @@ module Kaname
       end
 
       def users_hash
-        return @h if @h
-
-        @h = {}
-        list_users.each do |u|
+        @_user_hash ||= list_users.each_with_object(Hash.new { |h,k| h[k] = {} }) do |u,uh|
           next if ignored_users.include?(u.name)
-          @h[u.name] = {}
-          @h[u.name]["email"] = u.email
-          @h[u.name]["tenants"] = {}
-          list_tenants.each do |t|
-            r = Yao::Role.list_for_user(u.name, on: t.name)
-            if r.size > 0
-              @h[u.name]["tenants"][t.name] = r.first.name
-            end
-          end
+          uh[u.name]["email"] = u.email
+          uh[u.name]["tenants"] = tenant_role_hash(u.name, list_tenants)
         end
-        @h
       end
 
       def create_user(name, email)
@@ -64,6 +53,13 @@ module Kaname
       end
 
       private
+
+      def tenant_role_hash(user_name, tenants)
+        tenants.each_with_object(Hash.new) do |t,th|
+          r = Yao::Role.list_for_user(user_name, on: t.name)
+          th[t.name] = r.first.name if r.size > 0
+        end
+      end
 
       # default service users
       def ignored_users
