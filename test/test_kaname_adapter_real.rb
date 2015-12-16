@@ -2,6 +2,8 @@ require 'minitest_helper'
 
 class TestKanameAdapterReal < Minitest::Test
   def test_update_user_password
+    Kaname::Config.stubs(:setup)
+
     mock_auth = MiniTest::Mock.new.expect(:token, 'dummy_token')
     mock_user = MiniTest::Mock.new.expect(:id, 'dummy_id')
 
@@ -16,7 +18,7 @@ class TestKanameAdapterReal < Minitest::Test
       Yao::User.stub(:get_by_name, mock_user) do
         Kaname::Config.stub(:management_url, dummy_management_url) do
           Kaname::Config.stub(:username, "dummy_username") do
-            Kaname::Adapter::Real.new.update_user_password('old', 'new')
+            Kaname::Adapter::ReadAndWrite.new.update_user_password('old', 'new')
           end
         end
       end
