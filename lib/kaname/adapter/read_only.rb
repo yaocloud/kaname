@@ -26,7 +26,7 @@ module Kaname
         @_user_hash ||= list_users.each_with_object(Hash.new { |h,k| h[k] = {} }) do |u,uh|
           next if ignored_users.include?(u.name)
           uh[u.name]["email"] = u.email
-          uh[u.name]["tenants"] = tenant_role_hash(u.name, list_tenants)
+          uh[u.name]["tenants"] = tenant_role_hash(u.name)
         end
       end
 
@@ -54,8 +54,8 @@ module Kaname
 
       private
 
-      def tenant_role_hash(user_name, tenants)
-        tenants.each_with_object(Hash.new) do |t,th|
+      def tenant_role_hash(user_name)
+        list_tenants.each_with_object(Hash.new) do |t,th|
           r = Yao::Role.list_for_user(user_name, on: t.name)
           th[t.name] = r.first.name if r.size > 0
         end
