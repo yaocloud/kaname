@@ -1,8 +1,12 @@
+require 'parallel'
+
 module Kaname
   module Adapter
     class ReadOnly
-      def initialize
-        Kaname::Config.setup
+      attr_reader :parallel
+
+      def initialize(parallel: 1)
+        @parallel = parallel
       end
 
       def list_users
@@ -23,11 +27,10 @@ module Kaname
       end
 
       def users_hash
-        @_user_hash ||= list_users.each_with_object(Hash.new { |h,k| h[k] = {} }) do |u,uh|
+        @_user_hash ||= Parallel.map(list_users, in_processes: parallel) {|u|
           next if ignored_users.include?(u.name)
-          uh[u.name]["email"] = u.email
-          uh[u.name]["tenants"] = tenant_role_hash(u.name)
-        end
+          [u.name, {"email" => u.email, "tenants" => tenant_role_hash(u.name)}]
+        }.compact.to_h
       end
 
       def create_user(name, email)

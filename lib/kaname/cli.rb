@@ -22,11 +22,8 @@ module Kaname
     option :dryrun, type: :boolean
     desc 'apply', 'Commands about configuration apply'
     def apply
-      adapter = if options[:dryrun]
-        Kaname::Adapter::ReadOnly.new
-      else
-        Kaname::Adapter::ReadAndWrite.new
-      end
+      adapter_klass = options[:dryrun] ? Kaname::Adapter::ReadOnly : Kaname::Adapter::ReadAndWrite
+      adapter = adapter_klass.new(parallel: Kaname::Config.parallel)
 
       if Kaname::Resource.yaml
         diffs = HashDiff.diff(adapter.users_hash, Kaname::Resource.yaml)
