@@ -26,6 +26,15 @@ hsbt:
     production: "member"
 ```
 
+You can also define `all_tenants` for config all tenants' authority.  
+If both tenants and all_tenants are setting, tenants is preferred.
+
+```yaml
+suzupy:
+  email: suzupy@example.com
+  all_tenants: member
+```
+
 You need to put a configuration file to home directory.
 
 ```sh
