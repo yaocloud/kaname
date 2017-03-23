@@ -1,5 +1,6 @@
 foo:
   email: "foo@example.com"
+  all_tenants: "member"
   tenants:
     buzz: "admin"
     alpha: 'bravo'
