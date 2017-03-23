@@ -7,8 +7,6 @@ module Kaname
         if File.exists?(filename)
           @_yaml = YAML.load_file(filename)
           expand_all_tenants
-        else
-          nil
         end
       end
 
