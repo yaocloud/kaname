@@ -33,6 +33,9 @@ module Kaname
       @@username       = config['username']
       @@password       = config['password']
       @@management_url = config['management_url']
+      @@client_cert    = config['client_cert']
+      @@client_key     = config['client_key']
+      @@region_name    = config['region_name']
       true
     end
 
@@ -42,6 +45,9 @@ module Kaname
         tenant_name @@tenant
         username    @@username
         password    @@password
+        client_cert @@client_cert
+        client_key  @@client_key
+        region_name @@region_name
       end
     end
   end
