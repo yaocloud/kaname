@@ -46,6 +46,14 @@ password: "admin-no-password"
 management_url: "http://your-openstack-management-endpoint/v2.0"
 ```
 
+also, you can set some options.
+
+```
+client_cert: "/path/to/cert.pem"
+client_key: "/path/to/key.pem"
+region_name: "YourRegion"
+```
+
 run following command.
 
 ```sh
