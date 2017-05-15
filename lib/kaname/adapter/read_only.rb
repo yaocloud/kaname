@@ -22,11 +22,19 @@ module Kaname
         @_roles ||= Yao::Role.list
       end
 
+      def list_role_assignments
+        unless @_role_assignments
+          @_role_assignments ||= Yao::RoleAssignment.list
+          Yao::Auth.try_new
+        end
+        @_role_assignments
+      end
+
       def users_hash
         @_user_hash ||= list_users.each_with_object(Hash.new { |h,k| h[k] = {} }) do |u,uh|
           next if ignored_users.include?(u.name)
           uh[u.name]["email"] = u.email
-          uh[u.name]["tenants"] = tenant_role_hash(u.name)
+          uh[u.name]["tenants"] = tenant_role_hash(u.id)
         end
       end
 
@@ -54,10 +62,11 @@ module Kaname
 
       private
 
-      def tenant_role_hash(user_name)
-        list_tenants.each_with_object(Hash.new) do |t,th|
-          r = Yao::Role.list_for_user(user_name, on: t.name)
-          th[t.name] = r.first.name if r.size > 0
+      def tenant_role_hash(user_id)
+        list_role_assignments.each_with_object(Hash.new) do |t,th|
+          if t.user.id == user_id
+            th[list_tenants.find {|ts| ts.id == t.scope["project"]["id"]}["name"]] = list_roles.find {|r| r.id == t.role.id }['name']
+          end
         end
       end
 
