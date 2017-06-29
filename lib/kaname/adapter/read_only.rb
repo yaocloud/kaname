@@ -81,6 +81,7 @@ module Kaname
           nova
           heat
           ceilometer
+          octavia
         ]
       end
     end
