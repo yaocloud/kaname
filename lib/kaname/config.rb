@@ -3,6 +3,10 @@ require 'yaml'
 
 module Kaname
   class Config
+    %w[username management_url].each do |m|
+      self.class_variable_set(:"@@#{m}", String.new)
+    end
+
     def self.setup
       load_config
       setup_yao
