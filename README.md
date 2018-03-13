@@ -43,7 +43,6 @@ auth_url: "http://your-openstack-auth-endpoint/v2.0"
 username: "admin"
 tenant: "admin"
 password: "admin-no-password"
-management_url: "http://your-openstack-management-endpoint/v2.0"
 ```
 
 also, you can set some options.

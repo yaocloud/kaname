@@ -3,9 +3,7 @@ require 'yaml'
 
 module Kaname
   class Config
-    %w[username management_url].each do |m|
-      self.class_variable_set(:"@@#{m}", String.new)
-    end
+    @@username = String.new
 
     def self.setup
       load_config
@@ -14,10 +12,6 @@ module Kaname
 
     def self.username
       @@username
-    end
-
-    def self.management_url
-      @@management_url
     end
 
     private
@@ -36,7 +30,6 @@ module Kaname
       @@tenant         = config['tenant']
       @@username       = config['username']
       @@password       = config['password']
-      @@management_url = config['management_url']
       @@client_cert    = config['client_cert']
       @@client_key     = config['client_key']
       @@region_name    = config['region_name']
