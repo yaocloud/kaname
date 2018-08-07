@@ -8,7 +8,7 @@ module Kaname
     end
 
     def self.setup
-      load_config
+      load_config unless envs_exist?
       setup_yao
     end
 
@@ -21,6 +21,10 @@ module Kaname
     end
 
     private
+
+    def self.envs_exist?
+      %w[OS_AUTH_URL OS_TENANT_NAME OS_USERNAME OS_PASSWORD OS_CERT OS_KEY OS_REGION_NAME].any?{|k|ENV[k]}
+    end
 
     def self.load_config
       config_file = File.join(Dir.home, '.kaname')
