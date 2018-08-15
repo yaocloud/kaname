@@ -8,7 +8,7 @@ module Kaname
     end
 
     def self.setup
-      load_config
+      load_config unless envs_exist?
       setup_yao
     end
 
@@ -21,6 +21,10 @@ module Kaname
     end
 
     private
+
+    def self.envs_exist?
+      %w[OS_AUTH_URL OS_TENANT_NAME OS_USERNAME OS_PASSWORD OS_CERT OS_KEY OS_REGION_NAME].any?{|k|ENV[k]}
+    end
 
     def self.load_config
       config_file = File.join(Dir.home, '.kaname')
@@ -45,13 +49,13 @@ module Kaname
 
     def self.setup_yao
       Yao.configure do
-        auth_url    @@auth_url
-        tenant_name @@tenant
-        username    @@username
-        password    @@password
-        client_cert @@client_cert
-        client_key  @@client_key
-        region_name @@region_name
+        auth_url    (ENV['OS_AUTH_URL']    || @@auth_url)
+        tenant_name (ENV['OS_TENANT_NAME'] || @@tenant)
+        username    (ENV['OS_USERNAME']    || @@username)
+        password    (ENV['OS_PASSWORD']    || @@password)
+        client_cert (ENV['OS_CERT']        || @@client_cert)
+        client_key  (ENV['OS_KEY']         || @@client_key)
+        region_name (ENV['OS_REGION_NAME'] || @@region_name)
       end
     end
   end
