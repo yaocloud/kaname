@@ -3,7 +3,7 @@ require 'yaml'
 
 module Kaname
   class Config
-    %w[username management_url].each do |m|
+    %w[username management_url identity_api_version user_domain_name project_domain_name].each do |m|
       self.class_variable_set(:"@@#{m}", String.new)
     end
 
@@ -23,7 +23,7 @@ module Kaname
     private
 
     def self.envs_exist?
-      %w[OS_AUTH_URL OS_TENANT_NAME OS_USERNAME OS_PASSWORD OS_CERT OS_KEY OS_REGION_NAME].any?{|k|ENV[k]}
+      %w[OS_AUTH_URL OS_TENANT_NAME OS_USERNAME OS_PASSWORD OS_CERT OS_KEY OS_REGION_NAME OS_IDENTITY_API_VERSION].any?{|k|ENV[k]}
     end
 
     def self.load_config
@@ -44,6 +44,9 @@ module Kaname
       @@client_cert    = config['client_cert']
       @@client_key     = config['client_key']
       @@region_name    = config['region_name']
+      @@user_domain_name = config['user_domain_name']
+      @@project_domain_name = config['project_domain_name']
+      @@identity_api_version = config['identity_api_version']
       true
     end
 
@@ -56,6 +59,9 @@ module Kaname
         client_cert (ENV['OS_CERT']        || @@client_cert)
         client_key  (ENV['OS_KEY']         || @@client_key)
         region_name (ENV['OS_REGION_NAME'] || @@region_name)
+        identity_api_version (ENV['OS_IDENTITY_API_VERSION'] || @@identity_api_version)
+        user_domain_name     (ENV['OS_USER_DOMAIN_NAME']     || @@user_domain_name)
+        project_domain_name  (ENV['OS_PROJECT_DOMAIN_NAME']  || @@project_domain_name)
       end
     end
   end
