@@ -4,7 +4,7 @@ module Kaname
   class Resource
     class << self
       def yaml(filename = 'keystone.yml')
-        if File.exists?(filename)
+        if File.exist?(filename)
           @_yaml ||= expand_all_tenants(YAML.load_file(filename))
         end
       end
