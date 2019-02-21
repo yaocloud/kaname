@@ -17,25 +17,17 @@ module Kaname
       end
 
       def update_user_password(old_password, new_password)
-        unless Kaname::Config.management_url
-          raise 'management_url is missing. Check the configuration file.'
-        end
-
         if old_password && new_password
-          token = Yao::Auth.try_new.token
           me    = Yao::User.get_by_name(Kaname::Config.username)
-          endpoint = Kaname::Config.management_url
+          client= Yao.default_client.pool['identity']
 
-          url = URI.parse("#{endpoint}/OS-KSCRUD/users/#{me.id}")
+          params = JSON.generate({'user' => {'password' => new_password, 'original_password' => old_password}})
+          res = client.patch("./OS-KSCRUD/users/#{me.id}") do |req|
+            req.body = params
+            req.headers['Content-Type'] = 'application/json'
+          end
 
-          req = Net::HTTP::Patch.new(url.path)
-          req["Content-type"] = "application/json"
-          req["X-Auth-Token"] = token
-          req.body = JSON.generate({'user' => {'password' => new_password, 'original_password' => old_password}})
-
-          res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
-
-          if res.code == "200"
+          if res.status == 200
             puts "Your password is updated. Please update your ~/.kaname configuration too."
           else
             raise "password updating is failed"
