@@ -4,6 +4,8 @@ require 'yaml'
 module Kaname
   class Config
     @@username = String.new
+    @@client_key = nil
+    @@client_cert = nil
 
     def self.setup
       load_config unless envs_exist?
