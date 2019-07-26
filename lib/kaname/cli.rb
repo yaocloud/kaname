@@ -29,7 +29,7 @@ module Kaname
       end
 
       if Kaname::Resource.yaml
-        diffs = HashDiff.diff(adapter.users_hash, Kaname::Resource.yaml)
+        diffs = Hashdiff.diff(adapter.users_hash, Kaname::Resource.yaml)
         diffs.each do |diff|
           resource = diff[1].split('.')
           if resource.size == 1 # "user"

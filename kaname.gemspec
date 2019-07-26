@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "yao", ">= 0.3.3"
   spec.add_dependency "diffy"
-  spec.add_dependency "hashdiff"
+  spec.add_dependency "hashdiff", ">= 1.0.0"
   spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler"
