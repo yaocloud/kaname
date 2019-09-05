@@ -10,7 +10,7 @@ module Kaname
       end
 
       def find_user(name)
-        user = Yao::User.find_by_name(name)
+        user = Yao::User.find_by_name(name).first
         {"id" => user.id, "name" => user.name}
       end
 
