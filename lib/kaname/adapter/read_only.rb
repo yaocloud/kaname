@@ -15,7 +15,11 @@ module Kaname
       end
 
       def list_tenants
-        @_tenants ||= Yao::Tenant.list
+        @_tenants ||= if keystone_v2?
+                        Yao::Tenant.list
+                      else
+                        Yao::Project.list
+                      end
       end
 
       def list_roles
@@ -61,6 +65,10 @@ module Kaname
       end
 
       private
+
+      def keystone_v2?
+        Yao.default_client.pool["identity"].url_prefix.to_s.match(/v2\.0/)
+      end
 
       def tenant_role_hash(user_id)
         list_role_assignments.each_with_object(Hash.new) do |t,th|
