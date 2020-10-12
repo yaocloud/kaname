@@ -4,6 +4,7 @@ require 'yaml'
 module Kaname
   class Config
     @@username = String.new
+    @@ca_cert = nil
     @@client_key = nil
     @@client_cert = nil
 
@@ -36,6 +37,7 @@ module Kaname
       @@tenant               = config['tenant']
       @@username             = config['username']
       @@password             = config['password']
+      @@ca_cert              = config['ca_cert']
       @@client_cert          = config['client_cert']
       @@client_key           = config['client_key']
       @@region_name          = config['region_name']
@@ -51,6 +53,7 @@ module Kaname
         tenant_name          (ENV['OS_TENANT_NAME']          || @@tenant)
         username             (ENV['OS_USERNAME']             || @@username)
         password             (ENV['OS_PASSWORD']             || @@password)
+        ca_cert              (ENV['OS_CACERT']               || @@ca_cert)
         client_cert          (ENV['OS_CERT']                 || @@client_cert)
         client_key           (ENV['OS_KEY']                  || @@client_key)
         region_name          (ENV['OS_REGION_NAME']          || @@region_name)

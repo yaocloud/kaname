@@ -48,6 +48,7 @@ password: "admin-no-password"
 also, you can set some options.
 
 ```
+ca_cert: "/path/to/ca.pem"
 client_cert: "/path/to/cert.pem"
 client_key: "/path/to/key.pem"
 region_name: "YourRegion"
