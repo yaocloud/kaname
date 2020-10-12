@@ -7,5 +7,5 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'kaname'
 require 'minitest/autorun'
 require 'minitest/stub_any_instance'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require "webmock/minitest"
