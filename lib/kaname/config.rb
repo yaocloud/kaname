@@ -60,6 +60,7 @@ module Kaname
         identity_api_version (ENV['OS_IDENTITY_API_VERSION'] || @@identity_api_version)
         user_domain_name     (ENV['OS_USER_DOMAIN_NAME']     || @@user_domain_name)
         project_domain_name  (ENV['OS_PROJECT_DOMAIN_NAME']  || @@project_domain_name)
+        debug  ENV['YAO_DEBUG']
       end
     end
   end
