@@ -28,7 +28,7 @@ module Kaname
           end
 
           if res.status == 200
-            puts "Your password is updated. Please update your ~/.kaname configuration too."
+            puts "Your password is updated. Please update your $OS_PASSWORD configuration too."
           else
             raise "password updating is failed"
           end
