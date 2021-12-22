@@ -20,6 +20,7 @@ module Kaname
     end
 
     option :dryrun, type: :boolean
+    option :filename, aliases: :f, type: :string, default: 'keystone.yml'
     desc 'apply', 'Commands about configuration apply'
     def apply
       adapter = if options[:dryrun]
@@ -28,7 +29,7 @@ module Kaname
         Kaname::Adapter::ReadAndWrite.new
       end
 
-      if Kaname::Resource.yaml
+      if Kaname::Resource.yaml(options[:filename])
         diffs = Hashdiff.diff(adapter.users_hash, Kaname::Resource.yaml)
         diffs.each do |diff|
           resource = diff[1].split('.')
