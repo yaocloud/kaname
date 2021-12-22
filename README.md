@@ -26,7 +26,7 @@ hsbt:
     production: "member"
 ```
 
-You can also define `all_tenants` for config all tenants' authority.  
+You can also define `all_tenants` for config all tenants' authority.
 If both tenants and all_tenants are setting, tenants is preferred.
 
 ```yaml
@@ -35,23 +35,14 @@ suzupy:
   all_tenants: member
 ```
 
-You need to put a configuration file to home directory.
+You will need to set some ENV.
 
 ```sh
-% cat ~/.kaname
-auth_url: "http://your-openstack-auth-endpoint/v2.0"
-username: "admin"
-tenant: "admin"
-password: "admin-no-password"
-```
-
-also, you can set some options.
-
-```
-ca_cert: "/path/to/ca.pem"
-client_cert: "/path/to/cert.pem"
-client_key: "/path/to/key.pem"
-region_name: "YourRegion"
+$ export OS_AUTH_URL="http://your-openstack-auth-endpoint/v3"
+$ export OS_USERNAME="admin"
+$ export OS_PASSWORD="admin"
+$ export OS_PROJECT_NAME=admin
+$ export OS_TENANT_NAME=admin
 ```
 
 run following command.
