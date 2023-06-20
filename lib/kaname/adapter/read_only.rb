@@ -90,6 +90,7 @@ module Kaname
           heat
           ceilometer
           octavia
+          placement
         ]
       end
     end
