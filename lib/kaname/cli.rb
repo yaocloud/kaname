@@ -21,8 +21,11 @@ module Kaname
 
     option :dryrun, type: :boolean
     option :filename, aliases: :f, type: :string, default: 'keystone.yml'
+    option :password_length, aliases: :L, type: :numeric, default: 14
     desc 'apply', 'Commands about configuration apply'
     def apply
+      Generator.password_length = options[:password_length]
+
       adapter = if options[:dryrun]
         Kaname::Adapter::ReadOnly.new
       else
